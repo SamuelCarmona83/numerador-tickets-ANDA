@@ -1,3 +1,31 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+
+.celeste, .celeste a {
+    display: inline-block;
+    color:  #3865E5;
+    text-decoration: none;    
+    font-size: 20px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.celeste a:hover {
+    transform: scale(1.1);
+}
+
+.logo-link img {
+    max-height: 50px; 
+    height: auto;
+    width: auto;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+@media (min-width: 769px) {
+    .logo-link img {
+        max-height: 80px;
+    }
+}

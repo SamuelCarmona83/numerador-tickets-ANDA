@@ -13,6 +13,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
+			],
+			sucursales: [
+				'Artigas',
+				'Bella unión',
+				'Atlántida',
+				'Canelones',
+				'Ciudad de la costa',
+				'Las piedras',
+				'Pando',
+				'Santa Lucía',
+				'Salinas',
+				'San Ramón',
+				'Montevideo - Nuevo Centro Shopping',
+				'Montevideo - Tres Cruces Shopping',
+				'Montevideo - Arenal grande',
+				'Montevideo - Portones Shopping',
 			]
 		},
 		actions: {
