@@ -29,7 +29,7 @@ const Layout = () => {
                         {/* Páginas sin Navbar */}
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
-                        <Route element={<h1>Not found!</h1>} />
+                        <Route path="*" element={<h1>Error 404: Not found!</h1>} />
 
                         {/* Páginas con Navbar */}
                         <Route element={<WithNavbar />}>

@@ -59,3 +59,23 @@ def login():
 
     access_token = create_access_token(identity=doc_id)
     return jsonify(access_token=access_token), 201
+
+@api.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
+
+@api.route("/me", methods=["GET"])
+@jwt_required()
+def get_current_user():
+    current_user = get_jwt_identity()
+    print(f"Current user from token: {current_user}")  
+    user = User.query.filter_by(doc_id=current_user).first()
+    if user:
+        return jsonify({
+            "doc_id": user.doc_id,
+            "name": user.name
+        }), 200
+    print("User not found in the database.")
+    return jsonify({"msg": "User not found"}), 404
