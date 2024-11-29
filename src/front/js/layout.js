@@ -35,6 +35,7 @@ const Layout = () => {
                         <Route element={<WithNavbar />}>
                             <Route element={
                                 <ProtectedRoute>
+                                    {/*Acá van las rutas protegidas con login  */}
                                     <Home />
                                 </ProtectedRoute>} 
                             path="/" />
