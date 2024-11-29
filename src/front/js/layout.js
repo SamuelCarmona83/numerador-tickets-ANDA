@@ -4,12 +4,14 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import { Signup } from "./pages/signup";
+import { Login } from "./pages/login";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { WithNavbar } from "./component/withNavbar";
+import ProtectedRoute from "./component/protectedRoute";
 
 //create your first component
 const Layout = () => {
@@ -23,12 +25,20 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
+                    <Routes>       
+                        {/* Páginas sin Navbar */}
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<Signup />} />
                         <Route element={<h1>Not found!</h1>} />
+
+                        {/* Páginas con Navbar */}
+                        <Route element={<WithNavbar />}>
+                            <Route element={
+                                <ProtectedRoute>
+                                    <Home />
+                                </ProtectedRoute>} 
+                            path="/" />
+                        </Route>
                     </Routes>
                     <Footer />
                 </ScrollToTop>
