@@ -58,9 +58,7 @@ export const Navbar = () => {
 							<a className="nav-link active" aria-current="page" href="#">
 								Mis reservas
 							</a>
-							<a className="nav-link" href="#">
-								Editar datos
-							</a>
+							<Link to="/editar-perfil">Editar perfil</Link>
 							<a onClick={handleLogout} className="nav-link" href="#">
 								Cerrar Sesión
 							</a>

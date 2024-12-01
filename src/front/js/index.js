@@ -7,7 +7,7 @@ import "../styles/index.css";
 
 //import your own components
 import Layout from "./layout";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";  Agus: Este cambio me rompe la interface, no encuentra el módulo. El bootstrap está importado como script en el tempolate.
 
 
 //render your react application

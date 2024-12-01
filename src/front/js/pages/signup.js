@@ -14,7 +14,7 @@ export const Signup = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}/api/signup`, {
+            const response = await fetch(`${process.env.BACKEND_URL}api/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
