@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext"; 
 import logoAnda from "../../img/logo_anda.png";
 
 export const Signup = () => {
+    const { actions } = useContext(Context);
     const navigate = useNavigate();
     const [doc_id, setDocId] = useState("");
     const [name, setName] = useState("");
@@ -13,27 +15,13 @@ export const Signup = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        try {
-            const response = await fetch(`${process.env.BACKEND_URL}api/signup`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({doc_id, name, email, password }),
-            });
+        const result = await actions.signup(doc_id, name, email, password);
+        setMessage(result.message);
 
-            const data = await response.json();
-            if (!response.ok) {
-                setMessage(data.msg || "Error al registrar");
-                return;
-            }
-
-            setMessage("Usuario creado exitosamente! Redirigiendo al login...");
+        if(result.success) {
             setTimeout(() => {
-                navigate("/login"); 
+                navigate("/login");
             }, 2000);
-        } catch (error) {
-            setMessage("Error inesperado al registrar");
         }
     };
 

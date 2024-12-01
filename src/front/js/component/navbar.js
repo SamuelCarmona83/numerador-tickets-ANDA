@@ -1,33 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate  } from "react-router-dom";
+import { Context } from "../store/appContext";
 import logoAnda from "../../img/logo_anda.png";
-import { fetchUserData } from "./authUtils";
 
 export const Navbar = () => {
+	const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
 	const [username, setUsername] = useState("");
-	const navigate = useNavigate();
 
 	useEffect(() => {
-		const loadUser = async () => {
-			try {
-				const user = await fetchUserData();
-				if (user && user.name) {
-					setUsername(user.name);
-				} else {
-					throw new Error("Usuario no encontrado");
-				}
-			} catch (error) {
-				console.error("Error al cargar el usuario:", error);
-				localStorage.removeItem("token");
-				navigate("/login"); // Redirige al login si ocurre un error
-			}
-		};
-	
-		loadUser();
-	}, [navigate]);
+        const loadUser = async () => {
+            const result = await actions.fetchUserData();
+            if (!result.success) {
+                localStorage.removeItem("token");
+                navigate("/login");
+            }
+        };
+
+        loadUser();
+    }, [actions, navigate]);
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
+        actions.logout();
         navigate("/login");
     };
 	return (
@@ -41,7 +35,7 @@ export const Navbar = () => {
 				</div>
 				
 				<div>
-					<span className="me-3">Hola, {username || "Usuario"}</span>
+					<span className="me-3">Hola, {store.user?.name || "Usuario"}</span>
 					<button
 						className="navbar-toggler"
 						type="button"
