@@ -55,10 +55,8 @@ export const Navbar = () => {
 					</button>
 					<div className="collapse navbar-collapse" id="navbarNavAltMarkup">
 						<div className="navbar-nav">
-							<a className="nav-link active" aria-current="page" href="#">
-								Mis reservas
-							</a>
-							<Link to="/editar-perfil">Editar perfil</Link>
+							<Link className="nav-link" to="/">Mis reservas</Link>
+							<Link className="nav-link" to="/editar-perfil">Editar perfil</Link>
 							<a onClick={handleLogout} className="nav-link" href="#">
 								Cerrar Sesión
 							</a>

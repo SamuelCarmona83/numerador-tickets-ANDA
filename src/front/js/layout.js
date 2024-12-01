@@ -10,6 +10,9 @@ import ChangePassword from "./pages/changePassword";
 import injectContext from "./store/appContext";
 import ScheduleSelector from "./pages/scheduleSelector";
 import EditProfile from "./pages/editProfile";
+import { NotFound } from "./pages/notFound";
+
+import { ElegirServicio } from "./pages/agenda/elegirServicio";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -32,6 +35,7 @@ const Layout = () => {
                         {/* Páginas sin Navbar */}
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
+                        <Route path="*" element={<NotFound />} />
                         
 
                         {/* Páginas con Navbar */}
@@ -60,7 +64,14 @@ const Layout = () => {
                                 </ProtectedRoute>
                             } path="/change-password" />
 
-                            <Route path="*" element={<h1>Error 404: Not found!</h1>} />
+                            <Route element={
+                                <ProtectedRoute>
+                                    {/* Página de Agenda */}
+                                    <ElegirServicio />
+                                </ProtectedRoute>
+                            } path="/elegir-servicio" />
+
+                            
                         </Route>
                     </Routes>
                     <Footer />
