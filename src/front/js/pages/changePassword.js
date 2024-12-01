@@ -8,13 +8,21 @@ const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState(""); 
 
   const navigate = useNavigate(); 
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validar que los campos no esten vacios
+    if (!newPassword || !confirmPassword) {
+      setErrorMessage("Los campos no pueden estar vacíos.");
+      setSuccessMessage("");  
+      return;
+    }
 
     // Valida que las contraseñas coincidan
     if (newPassword !== confirmPassword) {
       setErrorMessage("Las contraseñas no coinciden.");
-      setSuccessMessage("");  // Limpiar el mensaje de exito si hay error
+      setSuccessMessage(""); 
     } else {
       // Aca va la logica para actualizar la contraseña (API o llamada al backend)
 
@@ -37,20 +45,18 @@ const ChangePassword = () => {
       <div className="card p-4" style={{ width: "400px" }}>
         <h2 className="text-center mb-4">Cambiar Contraseña</h2>
 
-        
         {successMessage && (
-          <div style={{ color: "green", marginBottom: "10px" }} className="alert alert-success">
+          <div className="alert alert-success" style={{ marginBottom: "10px" }}>
             {successMessage}
           </div>
         )}
 
         {errorMessage && (
-          <div style={{ color: "red", marginBottom: "10px" }} className="alert alert-danger">
+          <div className="alert alert-danger" style={{ marginBottom: "10px" }}>
             {errorMessage}
           </div>
         )}
 
-        {/* Formulario de cambio de contraseña */}
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
             <label htmlFor="newPassword">Nueva Contraseña</label>
