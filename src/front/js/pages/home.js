@@ -1,5 +1,5 @@
 import React from "react";
-import EditProfile from "../component/editProfile"; // Importar el componente EditProfile
+
 
 export const Home = () => {
     return (
@@ -7,7 +7,7 @@ export const Home = () => {
             
             
             {/* Formulario de edición de perfil */}
-            <EditProfile />
+           LANDING PAGE
         </div>
     );
 };
