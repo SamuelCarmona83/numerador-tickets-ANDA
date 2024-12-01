@@ -3,9 +3,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
+import { Home } from "./pages/home";  // Página de edición de perfil
 import { Signup } from "./pages/signup";
 import { Login } from "./pages/login";
+import ChangePassword from "./pages/changePassword";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -35,10 +36,18 @@ const Layout = () => {
                         <Route element={<WithNavbar />}>
                             <Route element={
                                 <ProtectedRoute>
-                                    {/*Acá van las rutas protegidas con login  */}
+                                    {/* Página de Home (Edición de perfil) */}
                                     <Home />
-                                </ProtectedRoute>} 
-                            path="/" />
+                                </ProtectedRoute>
+                            } path="/" />
+
+                            {/* Página para cambiar la contraseña */}
+                            <Route element={
+                                <ProtectedRoute>
+                                    {/* Página de cambio de contraseña */}
+                                    <ChangePassword />
+                                </ProtectedRoute>
+                            } path="/change-password" />
                         </Route>
                     </Routes>
                     <Footer />
