@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../../styles/ScheduleSelector.css"; 
 
 const ScheduleSelector = () => {
   const initialSchedule = [
@@ -17,12 +16,11 @@ const ScheduleSelector = () => {
     { time: "13:30", available: true },
   ];
 
-  const [schedule, setSchedule] = useState(initialSchedule);
   const [selectedTime, setSelectedTime] = useState(null);
   const [isReserved, setIsReserved] = useState(false);
 
   const handleSelect = (index) => {
-    setSelectedTime(schedule[index].time);
+    setSelectedTime(initialSchedule[index].time);
   };
 
   const handleReservation = () => {
@@ -35,23 +33,26 @@ const ScheduleSelector = () => {
 
   if (isReserved) {
     return (
-      <div className="container my-5 d-flex justify-content-center">
-        <div className="card p-4 shadow-lg confirmationCard">
+      <div className="d-flex justify-content-center align-items-center min-vh-100 m-0">
+        <div
+          className="card p-3 shadow-lg border-0"
+          style={{ maxWidth: "400px" }}
+        >
           <img
             src="https://logoteca.uy/wp-content/uploads/sites/3/2024/09/Logo-ANDA.svg"
             alt="Logo ANDA"
-            className="d-block mx-auto mb-3"
-            style={{ width: "120px" }}
+            className="d-block mx-auto mb-2"
+            style={{ width: "100px" }}
           />
-          <h2 className="text-center text-primary">
+          <h2 className="text-center text-primary h5">
             ¡Reserva realizada con éxito!
           </h2>
-          <p className="text-center">DÍA: 5/12/24</p>
-          <p className="text-center">HORA: {selectedTime}</p>
-          <p className="text-center">ESPECIALIDAD: X</p>
+          <p className="text-center small">DÍA: 5/12/24</p>
+          <p className="text-center small">HORA: {selectedTime}</p>
+          <p className="text-center small">ESPECIALIDAD: X</p>
           <button
             onClick={handleBackToHome}
-            className="btn btn-outline-primary w-100 mt-3"
+            className="btn btn-outline-primary w-100 mt-2 btn-sm"
           >
             Volver a la página de inicio
           </button>
@@ -61,54 +62,46 @@ const ScheduleSelector = () => {
   }
 
   return (
-    <div className="container my-5 d-flex justify-content-center">
-      <div className="card p-4 shadow-lg">
+    <div className="d-flex justify-content-center align-items-center min-vh-100 m-0">
+      <div
+        className="card p-2 shadow-lg border-0"
+        style={{ maxWidth: "400px", width: "100%" }}
+      >
         <img
           src="https://logoteca.uy/wp-content/uploads/sites/3/2024/09/Logo-ANDA.svg"
           alt="Logo ANDA"
-          className="d-block mx-auto mb-3"
-          style={{ width: "120px" }}
+          className="d-block mx-auto mb-2"
+          style={{ width: "100px" }}
         />
-        <div className="mb-4 text-center text-primary">
-          <div>
-            <span className="h6">Día seleccionado: 5/12/24</span>
-          </div>
-          <div>
-            <span className="h6">Horarios disponibles:</span>
-          </div>
+        <div className="mb-2 text-center text-primary">
+          <span className="h6 d-block">Día seleccionado: 5/12/24</span>
+          <span className="h6 d-block">Horarios disponibles:</span>
         </div>
-        <div className="row g-3">
-          {schedule.map((slot, index) => (
-            <div key={slot.time} className="col-4">
-              <div className="d-flex justify-content-between align-items-center">
+        <div className="row row-cols-2 g-1">
+          {initialSchedule.map((slot, index) => (
+            <div key={slot.time} className="col">
+              <div
+                className={`d-flex justify-content-between align-items-center border border-primary-subtle rounded px-2 py-1 ${
+                  slot.time === selectedTime ? "bg-light" : ""
+                }`}
+              >
                 <span
-                  className={`text-center ${
-                    slot.time === selectedTime ? "text-primary" : "text-dark"
+                  className={`small ${
+                    slot.time === selectedTime
+                      ? "text-primary fw-bold"
+                      : "text-dark"
                   }`}
-                  style={{ fontSize: "14px", fontWeight: "500" }}
                 >
                   {slot.time}
                 </span>
                 <button
                   onClick={() => handleSelect(index)}
-                  className={`btn ${
+                  className={`btn btn-sm ${
                     slot.time === selectedTime
-                      ? "bg-primary text-white"
+                      ? "btn-primary text-white"
                       : "btn-outline-primary"
-                  } p-2 rounded-3`}
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    border: "2px solid #3865E5",
-                    borderRadius: "8px",
-                    boxShadow:
-                      slot.time === selectedTime
-                        ? "0 0 10px rgba(56, 101, 229, 0.5)"
-                        : "0 2px 5px rgba(0, 0, 0, 0.1)",
-                    backgroundColor:
-                      slot.time === selectedTime ? "#3865E5" : "transparent",
-                    color: slot.time === selectedTime ? "white" : "#3865E5",
-                  }}
+                  } rounded-circle`}
+                  style={{ width: "30px", height: "30px" }}
                 >
                   {slot.time === selectedTime ? "✓" : ""}
                 </button>
@@ -119,7 +112,7 @@ const ScheduleSelector = () => {
         {selectedTime && (
           <button
             onClick={handleReservation}
-            className="btn btn-primary w-100 mt-3 reserveButton"
+            className="btn btn-primary w-100 mt-2 btn-sm"
           >
             Reservar
           </button>
