@@ -32,15 +32,15 @@ const MyReservations = () => {
             reservations.map((reservation, index) => (
               <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                 <div>
-                  <p className="m-0">Date: {reservation.date}</p>
-                  <p className="m-0">Time: {reservation.time}</p>
-                  <p className="m-0">Specialty: {reservation.specialty}</p>
+                  <p className="m-0">Fecha: {new Date(reservation.date).toLocaleDateString()}</p> {/* Convertir a cadena */}
+                  <p className="m-0">Hora: {reservation.time}</p>
+                  <p className="m-0">Especialidad: {reservation.specialty}</p> {/* Mostrar la especialidad */}
                 </div>
                 <button
                   onClick={() => handleDeleteReservation(index)}
                   className="btn btn-outline-danger btn-sm"
                 >
-                  Delete
+                  Borrar Reserva
                 </button>
               </li>
             ))

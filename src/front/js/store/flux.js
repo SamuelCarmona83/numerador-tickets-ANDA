@@ -18,13 +18,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                 'Montevideo - Portones Shopping',
             ],
             user: null,
-            selectedDate: '',
+            selectedDate: null,  // Asegúrate de inicializar esto como null
+            selectedService: '',  
             logoUrl: '',
             token: '',
-            reservations: [], // Añadimos la lista de reservas aquí
+            reservations: [],
         },
         actions: {
-            // función de registro de usuario
             signup: async (doc_id, name, email, password) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}api/signup`, {
@@ -46,7 +46,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, message: "Error inesperado al registrar usuario" };
                 }
             },
-            // función de login del usuario
             login: async (doc_id, password) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}api/login`, {
@@ -71,7 +70,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, message: "Error inesperado al iniciar sesión" };
                 }
             },
-            // Traer info del usuario
             fetchUserData: async () => {
                 const store = getStore();
                 const token = localStorage.getItem("token");
@@ -108,13 +106,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, message: "Token inválido o expirado" };
                 }
             },
-
-            // Logout del usuario
             logout: () => {
                 localStorage.removeItem("token");
                 setStore({ user: null });
             },
-
             setSelectedDate: (date) => {
                 setStore({ selectedDate: date });
                 console.log(date);
@@ -122,22 +117,19 @@ const getState = ({ getStore, getActions, setStore }) => {
             getSelectedDate: () => {
                 return getStore().selectedDate; 
             },
-
-            // Añadir reserva
+            setSelectedService: (service) => {
+                setStore({ selectedService: service });
+            },
             addReservation: (date, time, specialty) => {
                 const store = getStore();
                 const newReservations = [...store.reservations, { date, time, specialty }];
                 setStore({ reservations: newReservations });
             },
-
-            // Eliminar reserva
             deleteReservation: (index) => {
                 const store = getStore();
                 const newReservations = store.reservations.filter((_, i) => i !== index);
                 setStore({ reservations: newReservations });
             },
-
-            // Conectarse a API de Cloudinary
             uploadImage: async (file) => {
                 try {
                     const formData = new FormData();
@@ -164,8 +156,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, message: error.message };
                 }
             },
-
-            // Traer el logo desde store
             getLogoUrl: () => {
                 const store = getStore();
                 return store.logoUrl;

@@ -28,8 +28,7 @@ const ScheduleSelector = () => {
   };
 
   const handleReservation = () => {
-    const specialty = "X"; // Ajusta esto según tu lógica de especialidades
-    actions.addReservation(store.selectedDate.toLocaleDateString(), selectedTime, specialty);
+    actions.addReservation(store.selectedDate, selectedTime, store.selectedService);  // Añadir store.selectedService
     setIsReserved(true);
   };
 
@@ -54,12 +53,12 @@ const ScheduleSelector = () => {
           />
           <h2 className="text-center text-primary h5">¡Reserva realizada con éxito!</h2>
           {store.selectedDate ? (
-            <h3>Fecha seleccionada: {store.selectedDate.toLocaleDateString()}</h3>
+            <h3>Fecha seleccionada: {new Date(store.selectedDate).toLocaleDateString()}</h3>
           ) : (
             <p>No se ha seleccionado ninguna fecha aún.</p>
           )}
           <p className="text-center">HORA: {selectedTime}</p>
-          <p className="text-center">ESPECIALIDAD: X</p>
+          <p className="text-center">ESPECIALIDAD: {store.selectedService}</p>
           <button onClick={handleBackToHome} className="btn btn-outline-primary w-100 mt-2 btn-sm">
             Volver a la página de inicio
           </button>
@@ -84,7 +83,7 @@ const ScheduleSelector = () => {
         <div className="mb-4 text-center text-primary">
           <div>
             {store.selectedDate ? (
-              <h3>Fecha seleccionada: {store.selectedDate.toLocaleDateString()}</h3>
+              <h3>Fecha seleccionada: {new Date(store.selectedDate).toLocaleDateString()}</h3>
             ) : (
               <p>No se ha seleccionado ninguna fecha aún.</p>
             )}
