@@ -18,6 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				'Montevideo - Portones Shopping',
 			],
 			user: null,
+            selectedDate: ''
 		},
 		actions: {
 			// funcion de registro de usuario
@@ -104,6 +105,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.removeItem("token");
                 setStore({ user: null });
             },
+            setSelectedDate: (date) => {
+                setStore({ selectedDate: date });
+                console.log(date)
+              },
+            getSelectedDate: () => {
+                return getStore().selectedDate; 
+            },
+              
 		}
 	};
 };

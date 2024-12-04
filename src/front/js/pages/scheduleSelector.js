@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../../styles/ScheduleSelector.css"; 
+import {Context} from "../store/appContext";
 
 const ScheduleSelector = () => {
   const initialSchedule = [
@@ -20,6 +21,7 @@ const ScheduleSelector = () => {
   const [schedule, setSchedule] = useState(initialSchedule);
   const [selectedTime, setSelectedTime] = useState(null);
   const [isReserved, setIsReserved] = useState(false);
+	const { store } = useContext(Context);
 
   const handleSelect = (index) => {
     setSelectedTime(schedule[index].time);
@@ -46,7 +48,11 @@ const ScheduleSelector = () => {
           <h2 className="text-center text-primary">
             ¡Reserva realizada con éxito!
           </h2>
-          <p className="text-center">DÍA: 5/12/24</p>
+          {store.selectedDate ? (
+          <h3>Fecha seleccionada: {store.selectedDate.toLocaleDateString()}</h3>
+            ) : (
+              <p>No se ha seleccionado ninguna fecha aún.</p>
+          )}
           <p className="text-center">HORA: {selectedTime}</p>
           <p className="text-center">ESPECIALIDAD: X</p>
           <button
@@ -71,7 +77,11 @@ const ScheduleSelector = () => {
         />
         <div className="mb-4 text-center text-primary">
           <div>
-            <span className="h6">Día seleccionado: 5/12/24</span>
+            {store.selectedDate ? (
+            <h3>Fecha seleccionada: {store.selectedDate.toLocaleDateString()}</h3>
+              ) : (
+                <p>No se ha seleccionado ninguna fecha aún.</p>
+            )}
           </div>
           <div>
             <span className="h6">Horarios disponibles:</span>

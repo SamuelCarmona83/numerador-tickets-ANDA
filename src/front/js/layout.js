@@ -9,6 +9,7 @@ import { Login } from "./pages/login";
 import ChangePassword from "./pages/changePassword";
 import injectContext from "./store/appContext";
 import ScheduleSelector from "./pages/scheduleSelector";
+import ScheduleDate from "./pages/scheduleDate";
 import EditProfile from "./pages/editProfile";
 import { NotFound } from "./pages/notFound";
 
@@ -37,6 +38,7 @@ const Layout = () => {
                         <Route path="/signup" element={<Signup />} />
                         <Route path="*" element={<NotFound />} />
                         <Route path="/agenda" element={<ScheduleSelector />} />
+                        <Route path="/fecha" element={<ScheduleDate />} />
                         
                         {/* Páginas con Navbar */}
                         <Route element={<WithNavbar />}>
