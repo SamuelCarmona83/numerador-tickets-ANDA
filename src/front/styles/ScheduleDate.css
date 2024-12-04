@@ -1,0 +1,38 @@
+.logo-anda {
+    width: 120px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  
+  .calendar-day {
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 14px;
+  }
+  
+  .calendar-day:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+  }
+  
+  .selected-day {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    border: 2px solid #28a745;
+  }
+  
+  .btn-outline-primary {
+    font-size: 14px;
+  }
+  

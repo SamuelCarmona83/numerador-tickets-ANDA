@@ -9,6 +9,7 @@ import { Login } from "./pages/login";
 import ChangePassword from "./pages/changePassword";
 import injectContext from "./store/appContext";
 import ScheduleSelector from "./pages/scheduleSelector";
+import CalendarSelector from "./pages/CalendarSelector";
 import EditProfile from "./pages/editProfile";
 import { NotFound } from "./pages/notFound";
 
@@ -36,6 +37,9 @@ const Layout = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route path="*" element={<NotFound />} />
+                        <Route path="/agenda" element={<ScheduleSelector />} />
+                        <Route path="/fecha" element={<CalendarSelector />} />
+
                         
                         {/* Páginas con Navbar */}
                         <Route element={<WithNavbar />}>

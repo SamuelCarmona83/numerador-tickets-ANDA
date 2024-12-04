@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import "../../styles/ScheduleSelector.css"; 
+import {Context} from "../store/appContext";
 
 const ScheduleSelector = () => {
   const initialSchedule = [
@@ -18,6 +20,7 @@ const ScheduleSelector = () => {
 
   const [selectedTime, setSelectedTime] = useState(null);
   const [isReserved, setIsReserved] = useState(false);
+	const { store } = useContext(Context);
 
   const handleSelect = (index) => {
     setSelectedTime(initialSchedule[index].time);
@@ -47,9 +50,15 @@ const ScheduleSelector = () => {
           <h2 className="text-center text-primary h5">
             ¡Reserva realizada con éxito!
           </h2>
-          <p className="text-center small">DÍA: 5/12/24</p>
-          <p className="text-center small">HORA: {selectedTime}</p>
-          <p className="text-center small">ESPECIALIDAD: X</p>
+
+          {store.selectedDate ? (
+          <h3>Fecha seleccionada: {store.selectedDate.toLocaleDateString()}</h3>
+            ) : (
+              <p>No se ha seleccionado ninguna fecha aún.</p>
+          )}
+          <p className="text-center">HORA: {selectedTime}</p>
+          <p className="text-center">ESPECIALIDAD: X</p>
+
           <button
             onClick={handleBackToHome}
             className="btn btn-outline-primary w-100 mt-2 btn-sm"
@@ -73,9 +82,19 @@ const ScheduleSelector = () => {
           className="d-block mx-auto mb-2"
           style={{ width: "100px" }}
         />
-        <div className="mb-2 text-center text-primary">
-          <span className="h6 d-block">Día seleccionado: 5/12/24</span>
-          <span className="h6 d-block">Horarios disponibles:</span>
+
+        <div className="mb-4 text-center text-primary">
+          <div>
+            {store.selectedDate ? (
+            <h3>Fecha seleccionada: {store.selectedDate.toLocaleDateString()}</h3>
+              ) : (
+                <p>No se ha seleccionado ninguna fecha aún.</p>
+            )}
+          </div>
+          <div>
+            <span className="h6">Horarios disponibles:</span>
+          </div>
+
         </div>
         <div className="row row-cols-2 g-1">
           {initialSchedule.map((slot, index) => (

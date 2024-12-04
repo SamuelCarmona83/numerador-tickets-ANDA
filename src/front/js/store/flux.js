@@ -18,8 +18,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				'Montevideo - Portones Shopping',
 			],
 			user: null,
+
+            selectedDate: ''
             logoUrl: "",
             token:"",
+
 		},
 		actions: {
 			// funcion de registro de usuario
@@ -113,6 +116,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ user: null });
             },
 
+            setSelectedDate: (date) => {
+                setStore({ selectedDate: date });
+                console.log(date)
+              },
+            getSelectedDate: () => {
+                return getStore().selectedDate; 
+            },
+              
+
+
             // conectarse a API de cloudinary
             uploadImage: async (file) => {
 				try {
@@ -145,6 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				return store.logoUrl;
 			},
+
 		}
 	};
 };
