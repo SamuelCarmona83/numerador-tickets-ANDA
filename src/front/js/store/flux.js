@@ -18,7 +18,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				'Montevideo - Portones Shopping',
 			],
 			user: null,
+
             selectedDate: ''
+            logoUrl: "",
+            token:"",
+
 		},
 		actions: {
 			// funcion de registro de usuario
@@ -70,11 +74,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 			//Traer info del usuario
 			fetchUserData: async () => {
+                const store = getStore();
                 const token = localStorage.getItem("token");
 
                 if (!token) {
                     console.error("Token no encontrado");
                     return { success: false, message: "Token no encontrado" };
+                }
+
+                if (store.user) {
+                    console.log("Usuario ya cargado:", store.user);
+                    return { success: true, data: store.user };
                 }
 
                 try {
@@ -105,6 +115,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.removeItem("token");
                 setStore({ user: null });
             },
+
             setSelectedDate: (date) => {
                 setStore({ selectedDate: date });
                 console.log(date)
@@ -113,6 +124,41 @@ const getState = ({ getStore, getActions, setStore }) => {
                 return getStore().selectedDate; 
             },
               
+
+
+            // conectarse a API de cloudinary
+            uploadImage: async (file) => {
+				try {
+					const formData = new FormData();
+					formData.append("file", file);
+					formData.append("upload_preset", "preset_agustin"); 
+
+					const response = await fetch(
+						"https://api.cloudinary.com/v1_1/ddw7ebpjg/image/upload",
+						{
+							method: "POST",
+							body: formData,
+						}
+					);
+
+					if (!response.ok) {
+						throw new Error("Error al subir la imagen");
+					}
+
+					const data = await response.json();
+					setStore({ logoUrl: data.secure_url }); 
+					return { success: true, url: data.secure_url };
+				} catch (error) {
+					console.error("Error al subir la imagen:", error);
+					return { success: false, message: error.message };
+				}
+			},
+            // Traer el logo desde store
+            getLogoUrl: () => {
+				const store = getStore();
+				return store.logoUrl;
+			},
+
 		}
 	};
 };

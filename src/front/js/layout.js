@@ -39,10 +39,11 @@ const Layout = () => {
                         <Route path="*" element={<NotFound />} />
                         <Route path="/agenda" element={<ScheduleSelector />} />
                         <Route path="/fecha" element={<CalendarSelector />} />
+
                         
                         {/* Páginas con Navbar */}
                         <Route element={<WithNavbar />}>
-                            
+                            <Route path="/agenda" element={<ScheduleSelector />} /> 
 
                             <Route element={
                                 <ProtectedRoute>
