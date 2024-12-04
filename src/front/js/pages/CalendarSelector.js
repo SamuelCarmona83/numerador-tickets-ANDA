@@ -8,8 +8,8 @@ import logoAnda from "../../img/logo_anda.png";
 const CalendarSelector = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const { actions } = useContext(Context); // Acceso al store
-  const navigate = useNavigate(); // Para redirección
+  const { actions } = useContext(Context);
+  const navigate = useNavigate(); 
 
   const startDate = startOfMonth(currentMonth);
   const endDate = endOfMonth(currentMonth);
