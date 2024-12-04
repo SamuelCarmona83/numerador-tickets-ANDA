@@ -1,32 +1,31 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			sucursales: [
-				'Artigas',
-				'Bella unión',
-				'Atlántida',
-				'Canelones',
-				'Ciudad de la costa',
-				'Las piedras',
-				'Pando',
-				'Santa Lucía',
-				'Salinas',
-				'San Ramón',
-				'Montevideo - Nuevo Centro Shopping',
-				'Montevideo - Tres Cruces Shopping',
-				'Montevideo - Arenal grande',
-				'Montevideo - Portones Shopping',
-			],
-			user: null,
-
+    return {
+        store: {
+            sucursales: [
+                'Artigas',
+                'Bella unión',
+                'Atlántida',
+                'Canelones',
+                'Ciudad de la costa',
+                'Las piedras',
+                'Pando',
+                'Santa Lucía',
+                'Salinas',
+                'San Ramón',
+                'Montevideo - Nuevo Centro Shopping',
+                'Montevideo - Tres Cruces Shopping',
+                'Montevideo - Arenal grande',
+                'Montevideo - Portones Shopping',
+            ],
+            user: null,
             selectedDate: '',
             logoUrl: '',
-            token:'',
-
-		},
-		actions: {
-			// funcion de registro de usuario
-			signup: async (doc_id, name, email, password) => {
+            token: '',
+            reservations: [], // Añadimos la lista de reservas aquí
+        },
+        actions: {
+            // función de registro de usuario
+            signup: async (doc_id, name, email, password) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}api/signup`, {
                         method: "POST",
@@ -47,8 +46,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, message: "Error inesperado al registrar usuario" };
                 }
             },
-			// funcion de login del usuario
-			login: async (doc_id, password) => {
+            // función de login del usuario
+            login: async (doc_id, password) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}api/login`, {
                         method: "POST",
@@ -72,8 +71,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { success: false, message: "Error inesperado al iniciar sesión" };
                 }
             },
-			//Traer info del usuario
-			fetchUserData: async () => {
+            // Traer info del usuario
+            fetchUserData: async () => {
                 const store = getStore();
                 const token = localStorage.getItem("token");
 
@@ -118,49 +117,61 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             setSelectedDate: (date) => {
                 setStore({ selectedDate: date });
-                console.log(date)
-              },
+                console.log(date);
+            },
             getSelectedDate: () => {
                 return getStore().selectedDate; 
             },
-              
 
+            // Añadir reserva
+            addReservation: (date, time, specialty) => {
+                const store = getStore();
+                const newReservations = [...store.reservations, { date, time, specialty }];
+                setStore({ reservations: newReservations });
+            },
 
-            // conectarse a API de cloudinary
+            // Eliminar reserva
+            deleteReservation: (index) => {
+                const store = getStore();
+                const newReservations = store.reservations.filter((_, i) => i !== index);
+                setStore({ reservations: newReservations });
+            },
+
+            // Conectarse a API de Cloudinary
             uploadImage: async (file) => {
-				try {
-					const formData = new FormData();
-					formData.append("file", file);
-					formData.append("upload_preset", "preset_agustin"); 
+                try {
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    formData.append("upload_preset", "preset_agustin"); 
 
-					const response = await fetch(
-						"https://api.cloudinary.com/v1_1/ddw7ebpjg/image/upload",
-						{
-							method: "POST",
-							body: formData,
-						}
-					);
+                    const response = await fetch(
+                        "https://api.cloudinary.com/v1_1/ddw7ebpjg/image/upload",
+                        {
+                            method: "POST",
+                            body: formData,
+                        }
+                    );
 
-					if (!response.ok) {
-						throw new Error("Error al subir la imagen");
-					}
+                    if (!response.ok) {
+                        throw new Error("Error al subir la imagen");
+                    }
 
-					const data = await response.json();
-					setStore({ logoUrl: data.secure_url }); 
-					return { success: true, url: data.secure_url };
-				} catch (error) {
-					console.error("Error al subir la imagen:", error);
-					return { success: false, message: error.message };
-				}
-			},
+                    const data = await response.json();
+                    setStore({ logoUrl: data.secure_url }); 
+                    return { success: true, url: data.secure_url };
+                } catch (error) {
+                    console.error("Error al subir la imagen:", error);
+                    return { success: false, message: error.message };
+                }
+            },
+
             // Traer el logo desde store
             getLogoUrl: () => {
-				const store = getStore();
-				return store.logoUrl;
-			},
-
-		}
-	};
+                const store = getStore();
+                return store.logoUrl;
+            },
+        }
+    };
 };
 
 export default getState;

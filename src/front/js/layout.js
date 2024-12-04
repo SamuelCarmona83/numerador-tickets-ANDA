@@ -12,6 +12,7 @@ import ScheduleSelector from "./pages/scheduleSelector";
 import CalendarSelector from "./pages/CalendarSelector";
 import EditProfile from "./pages/editProfile";
 import { NotFound } from "./pages/notFound";
+import MyReservations from "./pages/MyReservations";
 
 import { ElegirServicio } from "./pages/agenda/elegirServicio";
 
@@ -26,7 +27,7 @@ const Layout = () => {
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if(!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL/ >;
 
     return (
         <div>
@@ -38,12 +39,11 @@ const Layout = () => {
                         <Route path="/signup" element={<Signup />} />
                         <Route path="*" element={<NotFound />} />
                         
-
-                        
                         {/* Páginas con Navbar */}
                         <Route element={<WithNavbar />}>
                             <Route path="/agenda" element={<ScheduleSelector />} />
                             <Route path="/fecha" element={<CalendarSelector />} />
+                            <Route path="/mis-reservas" element={<MyReservations />} />
                             <Route element={
                                 <ProtectedRoute>
                                     {/* Página de Agenda */}
@@ -72,8 +72,6 @@ const Layout = () => {
                                     <ElegirServicio />
                                 </ProtectedRoute>
                             } path="/elegir-servicio" />
-
-                            
                         </Route>
                     </Routes>
                     <Footer />
