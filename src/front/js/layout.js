@@ -37,14 +37,13 @@ const Layout = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route path="*" element={<NotFound />} />
-                        <Route path="/agenda" element={<ScheduleSelector />} />
-                        <Route path="/fecha" element={<CalendarSelector />} />
+                        
 
                         
                         {/* Páginas con Navbar */}
                         <Route element={<WithNavbar />}>
-                            <Route path="/agenda" element={<ScheduleSelector />} /> 
-
+                            <Route path="/agenda" element={<ScheduleSelector />} />
+                            <Route path="/fecha" element={<CalendarSelector />} />
                             <Route element={
                                 <ProtectedRoute>
                                     {/* Página de Agenda */}

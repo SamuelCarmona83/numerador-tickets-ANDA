@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import "../../styles/ScheduleSelector.css"; 
+//import "../../styles/ScheduleSelector.css"; 
 import {Context} from "../store/appContext";
 
 const ScheduleSelector = () => {

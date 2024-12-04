@@ -19,9 +19,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			user: null,
 
-            selectedDate: ''
-            logoUrl: "",
-            token:"",
+            selectedDate: '',
+            logoUrl: '',
+            token:'',
 
 		},
 		actions: {
