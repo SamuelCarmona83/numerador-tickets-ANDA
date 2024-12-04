@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-//import "../../styles/ScheduleSelector.css"; 
-import {Context} from "../store/appContext";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 const ScheduleSelector = () => {
   const initialSchedule = [
@@ -20,50 +20,50 @@ const ScheduleSelector = () => {
 
   const [selectedTime, setSelectedTime] = useState(null);
   const [isReserved, setIsReserved] = useState(false);
-	const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
 
   const handleSelect = (index) => {
     setSelectedTime(initialSchedule[index].time);
   };
 
   const handleReservation = () => {
+    actions.addReservation(store.selectedDate, selectedTime, store.selectedService);  // Añadir store.selectedService
     setIsReserved(true);
   };
 
   const handleBackToHome = () => {
     console.log("Volver a la página de inicio");
+    navigate("/");
+  };
+
+  const handleViewReservations = () => {
+    navigate("/mis-reservas");
   };
 
   if (isReserved) {
     return (
       <div className="d-flex justify-content-center align-items-center min-vh-100 m-0">
-        <div
-          className="card p-3 shadow-lg border-0"
-          style={{ maxWidth: "400px" }}
-        >
+        <div className="card p-3 shadow-lg border-0" style={{ maxWidth: "400px" }}>
           <img
             src="https://logoteca.uy/wp-content/uploads/sites/3/2024/09/Logo-ANDA.svg"
             alt="Logo ANDA"
             className="d-block mx-auto mb-2"
             style={{ width: "100px" }}
           />
-          <h2 className="text-center text-primary h5">
-            ¡Reserva realizada con éxito!
-          </h2>
-
+          <h2 className="text-center text-primary h5">¡Reserva realizada con éxito!</h2>
           {store.selectedDate ? (
-          <h3>Fecha seleccionada: {store.selectedDate.toLocaleDateString()}</h3>
-            ) : (
-              <p>No se ha seleccionado ninguna fecha aún.</p>
+            <h3>Fecha seleccionada: {new Date(store.selectedDate).toLocaleDateString()}</h3>
+          ) : (
+            <p>No se ha seleccionado ninguna fecha aún.</p>
           )}
           <p className="text-center">HORA: {selectedTime}</p>
-          <p className="text-center">ESPECIALIDAD: X</p>
-
-          <button
-            onClick={handleBackToHome}
-            className="btn btn-outline-primary w-100 mt-2 btn-sm"
-          >
+          <p className="text-center">ESPECIALIDAD: {store.selectedService}</p>
+          <button onClick={handleBackToHome} className="btn btn-outline-primary w-100 mt-2 btn-sm">
             Volver a la página de inicio
+          </button>
+          <button onClick={handleViewReservations} className="btn btn-primary w-100 mt-2 btn-sm">
+            Ver Mis Reservas
           </button>
         </div>
       </div>
@@ -72,10 +72,7 @@ const ScheduleSelector = () => {
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 m-0">
-      <div
-        className="card p-2 shadow-lg border-0"
-        style={{ maxWidth: "400px", width: "100%" }}
-      >
+      <div className="card p-2 shadow-lg border-0" style={{ maxWidth: "400px", width: "100%" }}>
         <img
           src="https://logoteca.uy/wp-content/uploads/sites/3/2024/09/Logo-ANDA.svg"
           alt="Logo ANDA"
@@ -86,15 +83,14 @@ const ScheduleSelector = () => {
         <div className="mb-4 text-center text-primary">
           <div>
             {store.selectedDate ? (
-            <h3>Fecha seleccionada: {store.selectedDate.toLocaleDateString()}</h3>
-              ) : (
-                <p>No se ha seleccionado ninguna fecha aún.</p>
+              <h3>Fecha seleccionada: {new Date(store.selectedDate).toLocaleDateString()}</h3>
+            ) : (
+              <p>No se ha seleccionado ninguna fecha aún.</p>
             )}
           </div>
           <div>
             <span className="h6">Horarios disponibles:</span>
           </div>
-
         </div>
         <div className="row row-cols-2 g-1">
           {initialSchedule.map((slot, index) => (
@@ -104,22 +100,12 @@ const ScheduleSelector = () => {
                   slot.time === selectedTime ? "bg-light" : ""
                 }`}
               >
-                <span
-                  className={`small ${
-                    slot.time === selectedTime
-                      ? "text-primary fw-bold"
-                      : "text-dark"
-                  }`}
-                >
+                <span className={`small ${slot.time === selectedTime ? "text-primary fw-bold" : "text-dark"}`}>
                   {slot.time}
                 </span>
                 <button
                   onClick={() => handleSelect(index)}
-                  className={`btn btn-sm ${
-                    slot.time === selectedTime
-                      ? "btn-primary text-white"
-                      : "btn-outline-primary"
-                  } rounded-circle`}
+                  className={`btn btn-sm ${slot.time === selectedTime ? "btn-primary text-white" : "btn-outline-primary"} rounded-circle`}
                   style={{ width: "30px", height: "30px" }}
                 >
                   {slot.time === selectedTime ? "✓" : ""}
@@ -129,10 +115,7 @@ const ScheduleSelector = () => {
           ))}
         </div>
         {selectedTime && (
-          <button
-            onClick={handleReservation}
-            className="btn btn-primary w-100 mt-2 btn-sm"
-          >
+          <button onClick={handleReservation} className="btn btn-primary w-100 mt-2 btn-sm">
             Reservar
           </button>
         )}
