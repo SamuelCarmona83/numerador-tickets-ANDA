@@ -1,14 +1,32 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; 
 import { Context } from "../store/appContext";
-import logoAnda from "../../img/logo_anda.png";
+//import logoAnda from "../../img/logo_anda.png";  Quedó obsoleto al usar la api de Cloudinary
 
 export const Login = () =>{
-    const { actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
     const navigate = useNavigate();
     const [doc_id, setDocId] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [logo, setLogo] = useState("");
+
+    useEffect(() => {
+        const fetchLogo = async () => {
+            if (!store.logoUrl) {
+                
+                const file = await fetch("https://res.cloudinary.com/ddw7ebpjg/image/upload/v1733250156/logo_anda_gwzhol.png").then(res => res.blob()); 
+                const result = await actions.uploadImage(file); 
+                if (result.success) {
+                    setLogo(result.url);
+                }
+            } else {
+                
+                setLogo(store.logoUrl);
+            }
+        };
+        fetchLogo();
+    }, [store.logoUrl, actions]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -25,7 +43,12 @@ export const Login = () =>{
     return(
         <div className="container text-center">
             <Link to="/">
-                <img className="img-fluid w-50 mx-auto" src={logoAnda} />
+                
+                {logo ? (
+                    <img className="img-fluid w-50 mx-auto" src={logo} alt="Logo Anda" />
+                ) : (
+                    <p>Cargando logo...</p>
+                )}
             </Link>
             {error && <p style={{ color: error.includes("success") ? "green" : "red" }}>{error}</p>}
             <main className="form-signin w-100 m-auto">

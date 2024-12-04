@@ -9,19 +9,22 @@ export const Navbar = () => {
 	const [username, setUsername] = useState("");
 
 	useEffect(() => {
-        const loadUser = async () => {
-            const result = await actions.fetchUserData();
-            if (!result.success) {
-                localStorage.removeItem("token");
-                navigate("/login");
-            }
-        };
-
-        loadUser();
-    }, [actions, navigate]);
+		const loadUser = async () => {
+			if (!store.user) { 
+				const result = await actions.fetchUserData();
+				if (!result.success) {
+					localStorage.removeItem("token");
+					navigate("/login");
+				}
+			}
+		};
+	
+		loadUser();
+	}, [actions, navigate, store.user]);
 
     const handleLogout = () => {
         actions.logout();
+		setUsername("");
         navigate("/login");
     };
 	return (

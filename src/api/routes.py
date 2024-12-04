@@ -13,14 +13,21 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+@api.route("/upload", methods=["POST"])
+def upload_image():
+    if "file" not in request.files:
+        return jsonify({"msg": "No file provided"}), 400
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
+    file = request.files["file"]
+    try:
+        # Subida a Cloudinary
+        upload_result = cloudinary.uploader.upload(file)
+        return jsonify({
+            "url": upload_result["secure_url"],
+            "public_id": upload_result["public_id"]
+        }), 200
+    except Exception as event:
+        return jsonify({"msg": str(event)}), 500
 
 #Signup endpoint
 @api.route('/signup', methods=['POST'])

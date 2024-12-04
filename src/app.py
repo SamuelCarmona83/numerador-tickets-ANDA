@@ -12,8 +12,20 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+import cloudinary
+import cloudinary.uploader
 
 # from models import Person
+
+#configuración de Cloudinary. También se puede importar desde el dashboard desde la url del 
+   # .env y evitar poner los datos aqui con:
+      # cloudinary.config_from_url(os.getenv("CLOUDINARY_URL"))
+
+cloudinary.config(
+    cloud_name='ddw7ebpjg', 
+    api_key='368379623895465',  
+    api_secret='qamWwWDN1aWChCEEVbRbetR5CDg'  
+)
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(

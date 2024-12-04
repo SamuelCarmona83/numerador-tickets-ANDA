@@ -1,21 +1,36 @@
 import React from "react";
+import document from "../../../img/document.png";
+import odonto from "../../../img/odonto.png";
+import medico from "../../../img/medico.png";
+
 
 export const ElegirServicio = () => {
+ 
 
-    return(
+    return (
         <div className="container text-center">
-            <select className="mt-3 form-select" aria-label="Default select example">
-                <option defaultValue>Seleccione Servicio</option>
-                <option value="1">Administrativo</option>
-                <option value="2">Médico</option>
-                <option value="3">Odontológico</option>
-            </select>
-            <select className="mt-3 form-select" aria-label="Default select example">
-                <option defaultValue>Seleccione Sucursal</option>
-                <option value="1">Administrativo</option>
-                <option value="2">Médico</option>
-                <option value="3">Odontológico</option>
-            </select>
+            <div className="row">
+                <h2 className="my-2 text-blue">Indique el tipo de reserva:</h2>
+                <p><i>Seleccione haciendo tocando la imagen</i></p>
+                <div className="col-12 col-md-4 my-3 bg-light rounded py-3 celeste">
+                    <a>
+                        <h3>Administrativas:</h3>
+                        <img className="img-fluid w-50 mx-auto" src={document} alt="Documento" />
+                    </a>
+                </div>
+                <div className="col-12 col-md-4 my-3 bg-light rounded py-3 celeste">
+                    <a>
+                        <h3>Médicas</h3>
+                        <img className="img-fluid w-50 mx-auto" src={medico} alt="Médico" />
+                    </a>
+                </div>
+                <div className="col-12 col-md-4 my-3 bg-light rounded py-3 celeste">
+                    <a>
+                        <h3>Odontológicas</h3>
+                        <img className="img-fluid w-50 mx-auto" src={odonto} alt="Odonto" />
+                    </a>
+                </div>
+            </div>
         </div>
-    )
-}
+    );
+};
