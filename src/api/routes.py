@@ -25,7 +25,7 @@ sender_password = os.getenv("SMTP_APP_PASSWORD")
 smtp_host = os.getenv("SMTP_HOST")
 smtp_port = os.getenv("SMTP_PORT")
 
-receivers_emails = ["budaenpantuflas@gmail.com"]
+receivers_emails = ["test@gmail.com"]
 
 def send_singup_email(receivers_emails):
     message  = MIMEMultipart("alternative")
@@ -62,7 +62,7 @@ def send_singup_email(receivers_emails):
 def send_email():
     message  = MIMEMultipart("alternative")
     message["Subject"] = "Prueba de envío de correo - Ticket Anda 🐬🌈"
-    message["From"] = "samuel.carmona.rodrigz@gmail.com"
+    message["From"] = ""
     message["To"] = ", ".join(receivers_emails)
     
     html_content = """
