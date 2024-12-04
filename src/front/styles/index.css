@@ -29,3 +29,23 @@
         max-height: 80px;
     }
 }
+
+/* Estilos de Alison */
+
+.text-blue {
+    color: #007bff; 
+}
+/* Formulario de editar perfil */
+.edit-profile-container {
+    max-width: 400px; 
+    margin: 0 auto; 
+    padding: 20px; 
+    border: 1px solid #007bff; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    background-color: #ffffff; 
+}
+/* Espaciado en los elementos del formulario */
+.edit-profile-container .form-control {
+    margin-bottom: 15px;
+}

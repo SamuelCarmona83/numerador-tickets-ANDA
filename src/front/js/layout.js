@@ -3,10 +3,16 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
+import { Home } from "./pages/home";  
 import { Signup } from "./pages/signup";
 import { Login } from "./pages/login";
+import ChangePassword from "./pages/changePassword";
 import injectContext from "./store/appContext";
+import ScheduleSelector from "./pages/scheduleSelector";
+import EditProfile from "./pages/editProfile";
+import { NotFound } from "./pages/notFound";
+
+import { ElegirServicio } from "./pages/agenda/elegirServicio";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -29,16 +35,43 @@ const Layout = () => {
                         {/* Páginas sin Navbar */}
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
-                        <Route path="*" element={<h1>Error 404: Not found!</h1>} />
-
+                        <Route path="*" element={<NotFound />} />
+                        <Route path="/agenda" element={<ScheduleSelector />} />
+                        
                         {/* Páginas con Navbar */}
                         <Route element={<WithNavbar />}>
+                            
+
                             <Route element={
                                 <ProtectedRoute>
-                                    {/*Acá van las rutas protegidas con login  */}
+                                    {/* Página de Agenda */}
+                                    <EditProfile />
+                                </ProtectedRoute>
+                            } path="/editar-perfil" />
+
+                            <Route element={
+                                <ProtectedRoute>
+                                    {/* Página de Home (Edición de perfil) */}
                                     <Home />
-                                </ProtectedRoute>} 
-                            path="/" />
+                                </ProtectedRoute>
+                            } path="/" />
+
+                            {/* Página para cambiar la contraseña */}
+                            <Route element={
+                                <ProtectedRoute>
+                                    {/* Página de cambio de contraseña */}
+                                    <ChangePassword />
+                                </ProtectedRoute>
+                            } path="/change-password" />
+
+                            <Route element={
+                                <ProtectedRoute>
+                                    {/* Página de Agenda */}
+                                    <ElegirServicio />
+                                </ProtectedRoute>
+                            } path="/elegir-servicio" />
+
+                            
                         </Route>
                     </Routes>
                     <Footer />

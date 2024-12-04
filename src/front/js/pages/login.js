@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom"; 
+import { Context } from "../store/appContext";
 import logoAnda from "../../img/logo_anda.png";
 
 export const Login = () =>{
-    
+    const { actions } = useContext(Context);
     const navigate = useNavigate();
     const [doc_id, setDocId] = useState("");
     const [password, setPassword] = useState("");
@@ -12,26 +13,12 @@ export const Login = () =>{
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        try {
-            const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ doc_id, password }),
-            });
-
-            if (!response.ok) {
-                const data = await response.json();
-                setError(data.msg || "Error al iniciar sesión");
-                return;
-            }
-
-            const data = await response.json();
-            localStorage.setItem("token", data.access_token); 
-            navigate("/");  
-        } catch (error) {
-            setError("Error inesperado al iniciar sesión");
+        const result = await actions.login(doc_id, password);
+        if(!result.success) {
+            setError(result.message);
+        } else {
+            setError("Inicio de sesión exitoso");
+            navigate("/");
         }
     };
 

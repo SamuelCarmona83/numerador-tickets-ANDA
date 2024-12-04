@@ -1,26 +1,27 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
+import React from "react";
+import { Link } from "react-router-dom"; 
+import logoAnda from "../../img/logo_anda.png";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
-
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
-		</div>
-	);
+    return (
+        <div className="container d-flex justify-content-center align-items-center">
+            <div className="row">
+                <div className="col d-flex justify-content-center">
+                    <div className="card" style={{ width: "18rem" }}>
+                        <img className="img-fluid w-50 mx-auto" src={logoAnda} alt="Logo Anda" />
+                        <div className="card-body">
+                            <h5 className="card-title">Agenda servicio #</h5>
+                            <p className="card-text">Resumen de datos de agenda. Poner día / hora / sucursal.</p>
+                            <p className="card-text">Poner una vista de imprimir que lo centre en el medio de la página y le saque el navbar.</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="mt-3 text-center">
+                    <button type="button" className="btn celeste">
+                        <Link to="/elegir-servicio">Agende una nueva reserva</Link>
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
 };
